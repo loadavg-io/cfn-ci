@@ -29,6 +29,14 @@ class Manifest(object):
 
     def __setattr__(self, key, value):
         self.manifest[key] = value
+        self.save()
+
+    def __delattr__(self, key):
+        try:
+            del self.manifest[key]
+        except KeyError:
+            raise AttributeError(key)
+        self.save()
 
     def __dir__(self):
         result = super().__dir__()
